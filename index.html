@@ -218,7 +218,7 @@
 
                     <div class="carousel-slide">
 
-                        <img src="img/helado-2.png"
+                        <img src="img/helado-2.jpg"
                              alt="Helado de fruta">
 
                     </div>
@@ -226,7 +226,7 @@
 
                     <div class="carousel-slide">
 
-                        <img src="img/helado-3.jpg"
+                        <img src="img/helado-3.png"
                              alt="Helado refrescante">
 
                     </div>
@@ -234,7 +234,7 @@
 
                     <div class="carousel-slide">
 
-                        <img src="img/helado-4.jpg"
+                        <img src="img/helado-4.png"
                              alt="Helado artesanal">
 
                     </div>
@@ -243,6 +243,18 @@
                     <div class="carousel-slide">
 
                         <img src="img/helado-5.jpg"
+                             alt="Helado con fruta">
+
+                    </div>
+                    <div class="carousel-slide">
+
+                        <img src="img/helado-6.jpg"
+                             alt="Helado con fruta">
+
+                    </div>
+                    <div class="carousel-slide">
+
+                        <img src="img/helado-7.png"
                              alt="Helado con fruta">
 
                     </div>
@@ -357,7 +369,7 @@
 
                     <div class="product-image">
 
-                        <img src="img/helado-2.png"
+                        <img src="img/helado-2.jpg"
                              alt="Helado Mangobiche con Chamoy">
 
                     </div>
@@ -402,7 +414,7 @@
 
                     <div class="product-image">
 
-                        <img src="img/helado-3.jpg"
+                        <img src="img/helado-3.png"
                              alt="Helado Maracumango">
 
                     </div>
@@ -447,7 +459,7 @@
 
                     <div class="product-image">
 
-                        <img src="img/helado-4.jpg"
+                        <img src="img/helado-4.png"
                              alt="Helado Maracumango con Chamoy">
 
                     </div>
@@ -537,7 +549,7 @@
 
                     <div class="product-image">
 
-                        <img src="img/helado-1.png"
+                        <img src="img/helado-6.jpg"
                              alt="Combinados con Chamoy">
 
                     </div>
@@ -582,7 +594,7 @@
 
                     <div class="product-image">
 
-                        <img src="img/helado-2.png"
+                        <img src="img/helado-7.png"
                              alt="Bolis">
 
                     </div>
@@ -625,6 +637,9 @@
         </div>
 
     </section>
+   
+
+
 
 
     <!-- =========================
@@ -632,7 +647,241 @@
     ========================== -->
 
     <section class="wholesale section" id="mayoristas">
+        <!-- =========================
+     CALCULADORA MAYORISTA
+========================== -->
 
+<section class="calculator section" id="calculadora">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-tag">
+                COTIZA TU PEDIDO
+            </span>
+
+            <h2>
+                Calcula tu pedido al por mayor
+            </h2>
+
+            <p>
+                Selecciona la cantidad de helados que quieres comprar
+                y obtén tu cotización automáticamente.
+            </p>
+
+        </div>
+
+
+        <div class="calculator-box calculator-wholesale">
+
+            <div class="calculator-info">
+
+                <div class="calculator-icon">
+                    🍦
+                </div>
+
+                <h3>
+                    Precios mayoristas
+                </h3>
+
+                <p>
+                    Entre más helados compres, mejor será el precio
+                    por unidad.
+                </p>
+
+
+                <div class="wholesale-prices">
+
+                    <div class="wholesale-price">
+
+                        <span>
+                            20 - 39 helados
+                        </span>
+
+                        <strong>
+                            $1.600 c/u
+                        </strong>
+
+                    </div>
+
+
+                    <div class="wholesale-price">
+
+                        <span>
+                            40 - 79 helados
+                        </span>
+
+                        <strong>
+                            $1.500 c/u
+                        </strong>
+
+                    </div>
+
+
+                    <div class="wholesale-price">
+
+                        <span>
+                            80 - 149 helados
+                        </span>
+
+                        <strong>
+                            $1.400 c/u
+                        </strong>
+
+                    </div>
+
+
+                    <div class="wholesale-price">
+
+                        <span>
+                            150+ helados
+                        </span>
+
+                        <strong>
+                            $1.300 c/u
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="calculator-form">
+
+                <div class="input-group">
+
+                    <label for="pedidoNombre">
+                        Nombre
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pedidoNombre"
+                        placeholder="Escribe tu nombre"
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="pedidoCantidad">
+                        Cantidad de helados
+                    </label>
+
+                    <input
+                        type="number"
+                        id="pedidoCantidad"
+                        min="20"
+                        step="1"
+                        placeholder="Mínimo 20"
+                    >
+
+                    <small class="calculator-help">
+                        Pedido mínimo: 20 helados
+                    </small>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="pedidoLugar">
+                        Lugar de entrega
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pedidoLugar"
+                        placeholder="Ej: Ubaté, Cundinamarca"
+                    >
+
+                </div>
+
+
+                <div
+                    id="pedidoError"
+                    class="pedido-error"
+                ></div>
+
+
+                <div
+                    id="pedidoCotizacion"
+                    class="pedido-cotizacion"
+                >
+
+                    <div class="cotizacion-header">
+
+                        <span>
+                            🍦 Tu cotización
+                        </span>
+
+                    </div>
+
+
+                    <div class="cotizacion-row">
+
+                        <span>
+                            Cantidad
+                        </span>
+
+                        <strong id="pedidoResultadoCantidad">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="cotizacion-row">
+
+                        <span>
+                            Precio por helado
+                        </span>
+
+                        <strong id="pedidoResultadoPrecio">
+                            $0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="cotizacion-total">
+
+                        <span>
+                            Total del pedido
+                        </span>
+
+                        <strong id="pedidoResultadoTotal">
+                            $0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn btn-whatsapp calculator-whatsapp"
+                    id="pedidoWhatsapp"
+                >
+
+                    <i class="fab fa-whatsapp"></i>
+
+                    Pedir por WhatsApp
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
         <div class="container">
 
             <div class="wholesale-content">
@@ -813,7 +1062,7 @@
         </div>
 
     </section>
-
+    
 
     <!-- =========================
          CTA
