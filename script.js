@@ -1,9 +1,8 @@
-
 /* ==========================================
    CONFIGURACIÓN
 ========================================== */
 
-// Cambia este número por el WhatsApp real del negocio.
+// WhatsApp del negocio
 // Formato: código de país + número, sin +, espacios ni guiones.
 const WHATSAPP = "573227403563";
 
@@ -15,7 +14,7 @@ const WHATSAPP = "573227403563";
 const menuToggle = document.getElementById("menuToggle");
 const navMenu = document.getElementById("navMenu");
 
-if (menuToggle) {
+if (menuToggle && navMenu) {
 
     menuToggle.addEventListener("click", () => {
 
@@ -30,7 +29,9 @@ document.querySelectorAll(".nav-menu a").forEach(link => {
 
     link.addEventListener("click", () => {
 
-        navMenu.classList.remove("active");
+        if (navMenu) {
+            navMenu.classList.remove("active");
+        }
 
     });
 
@@ -44,6 +45,8 @@ document.querySelectorAll(".nav-menu a").forEach(link => {
 window.addEventListener("scroll", () => {
 
     const navbar = document.getElementById("navbar");
+
+    if (!navbar) return;
 
     if (window.scrollY > 50) {
 
@@ -70,160 +73,213 @@ const carouselTrack =
 const carouselSlides =
     document.querySelectorAll(".carousel-slide");
 
+// IMPORTANTE:
+// Estos IDs coinciden con tu index.html
 const carouselPrev =
-    document.getElementById("carouselPrev");
+    document.getElementById("prevBtn");
 
 const carouselNext =
-    document.getElementById("carouselNext");
+    document.getElementById("nextBtn");
 
 const carouselDots =
     document.getElementById("carouselDots");
 
 
 let currentSlide = 0;
-
 let carouselInterval;
 
 
 /*
-    Crear los puntos del carrusel
+    Verificar que exista el carrusel
 */
 
-carouselSlides.forEach((slide, index) => {
+if (
+    carouselTrack &&
+    carouselSlides.length > 0 &&
+    carouselDots
+) {
 
-    const dot = document.createElement("button");
+    /*
+        Crear los puntos del carrusel
+    */
 
-    dot.classList.add("carousel-dot");
+    carouselSlides.forEach((slide, index) => {
 
-    if (index === 0) {
+        const dot = document.createElement("button");
 
-        dot.classList.add("active");
+        dot.classList.add("carousel-dot");
+
+        dot.setAttribute(
+            "aria-label",
+            `Ir a la imagen ${index + 1}`
+        );
+
+        if (index === 0) {
+
+            dot.classList.add("active");
+
+        }
+
+        dot.addEventListener("click", () => {
+
+            currentSlide = index;
+
+            updateCarousel();
+
+            restartCarousel();
+
+        });
+
+        carouselDots.appendChild(dot);
+
+    });
+
+
+    /*
+        Obtener los puntos después de crearlos
+    */
+
+    const dots =
+        document.querySelectorAll(".carousel-dot");
+
+
+    /*
+        ACTUALIZAR CARRUSEL
+    */
+
+    function updateCarousel() {
+
+        carouselTrack.style.transform =
+            `translateX(-${currentSlide * 100}%)`;
+
+
+        dots.forEach((dot, index) => {
+
+            dot.classList.toggle(
+                "active",
+                index === currentSlide
+            );
+
+        });
 
     }
 
-    dot.addEventListener("click", () => {
 
-        currentSlide = index;
+    /*
+        SIGUIENTE IMAGEN
+    */
+
+    function nextSlide() {
+
+        currentSlide++;
+
+        if (
+            currentSlide >= carouselSlides.length
+        ) {
+
+            currentSlide = 0;
+
+        }
 
         updateCarousel();
 
-        restartCarousel();
-
-    });
-
-    carouselDots.appendChild(dot);
-
-});
+    }
 
 
-const dots =
-    document.querySelectorAll(".carousel-dot");
+    /*
+        IMAGEN ANTERIOR
+    */
+
+    function previousSlide() {
+
+        currentSlide--;
+
+        if (currentSlide < 0) {
+
+            currentSlide =
+                carouselSlides.length - 1;
+
+        }
+
+        updateCarousel();
+
+    }
 
 
-function updateCarousel() {
+    /*
+        BOTÓN DERECHA
+    */
 
-    carouselTrack.style.transform =
-        `translateX(-${currentSlide * 100}%)`;
+    if (carouselNext) {
 
+        carouselNext.addEventListener(
+            "click",
+            () => {
 
-    dots.forEach((dot, index) => {
+                nextSlide();
 
-        dot.classList.toggle(
-            "active",
-            index === currentSlide
+                restartCarousel();
+
+            }
         );
 
-    });
-
-}
+    }
 
 
-function nextSlide() {
+    /*
+        BOTÓN IZQUIERDA
+    */
 
-    currentSlide++;
+    if (carouselPrev) {
 
-    if (currentSlide >= carouselSlides.length) {
+        carouselPrev.addEventListener(
+            "click",
+            () => {
 
-        currentSlide = 0;
+                previousSlide();
+
+                restartCarousel();
+
+            }
+        );
 
     }
 
-    updateCarousel();
 
-}
+    /*
+        CARRUSEL AUTOMÁTICO
+    */
 
+    function startCarousel() {
 
-function previousSlide() {
-
-    currentSlide--;
-
-    if (currentSlide < 0) {
-
-        currentSlide = carouselSlides.length - 1;
+        carouselInterval = setInterval(
+            nextSlide,
+            5000
+        );
 
     }
 
-    updateCarousel();
 
-}
+    /*
+        REINICIAR AUTOMÁTICO
+    */
 
+    function restartCarousel() {
 
-if (carouselNext) {
+        clearInterval(carouselInterval);
 
-    carouselNext.addEventListener(
-        "click",
-        () => {
+        startCarousel();
 
-            nextSlide();
-
-            restartCarousel();
-
-        }
-    );
-
-}
+    }
 
 
-if (carouselPrev) {
-
-    carouselPrev.addEventListener(
-        "click",
-        () => {
-
-            previousSlide();
-
-            restartCarousel();
-
-        }
-    );
-
-}
-
-
-/*
-    Carrusel automático
-*/
-
-function startCarousel() {
-
-    carouselInterval = setInterval(
-        nextSlide,
-        5000
-    );
-
-}
-
-
-function restartCarousel() {
-
-    clearInterval(carouselInterval);
+    /*
+        Iniciar carrusel
+    */
 
     startCarousel();
 
 }
-
-
-startCarousel();
 
 
 /* ==========================================
@@ -240,9 +296,9 @@ function abrirWhatsApp(mensaje) {
 }
 
 
-/*
-    Pedido de producto
-*/
+/* ==========================================
+   PEDIDO DE PRODUCTO
+========================================== */
 
 function pedirProducto(producto) {
 
@@ -254,9 +310,9 @@ function pedirProducto(producto) {
 }
 
 
-/*
-    Pedido general
-*/
+/* ==========================================
+   PEDIDO GENERAL
+========================================== */
 
 function hacerPedidoGeneral() {
 
@@ -268,9 +324,9 @@ function hacerPedidoGeneral() {
 }
 
 
-/*
-    Contacto para mayoristas
-*/
+/* ==========================================
+   CONTACTO MAYORISTA
+========================================== */
 
 function contactarMayorista() {
 
@@ -282,9 +338,9 @@ function contactarMayorista() {
 }
 
 
-/*
-    Botón flotante
-*/
+/* ==========================================
+   CONTACTO WHATSAPP
+========================================== */
 
 function contactarWhatsApp() {
 
@@ -296,9 +352,20 @@ function contactarWhatsApp() {
 }
 
 
+/* ==========================================
+   BOTÓN WHATSAPP FLOTANTE
+========================================== */
+
+/*
+    En tu HTML actual el botón flotante
+    usa onclick="contactarWhatsApp()".
+
+    Por eso no necesitamos agregar otro
+    evento aquí.
+*/
+
 const whatsappFloat =
     document.getElementById("whatsappFloat");
-
 
 if (whatsappFloat) {
 
@@ -312,124 +379,6 @@ if (whatsappFloat) {
 
         }
     );
-
-}
-
-
-/* ==========================================
-   CALCULADORA
-========================================== */
-
-function calcularGanancia() {
-
-    const inversion =
-        Number(
-            document.getElementById("inversion").value
-        );
-
-
-    const costo =
-        Number(
-            document.getElementById("costo").value
-        );
-
-
-    const precioVenta =
-        Number(
-            document.getElementById("precioVenta").value
-        );
-
-
-    /*
-        Validación
-    */
-
-    if (
-        inversion <= 0 ||
-        costo <= 0 ||
-        precioVenta <= 0
-    ) {
-
-        alert(
-            "Por favor ingresa valores mayores que cero."
-        );
-
-        return;
-
-    }
-
-
-    /*
-        Calculamos cuántos helados
-        se pueden producir.
-    */
-
-    const cantidad =
-        Math.floor(inversion / costo);
-
-
-    /*
-        Ingreso total
-    */
-
-    const ventas =
-        cantidad * precioVenta;
-
-
-    /*
-        Ganancia bruta
-    */
-
-    const ganancia =
-        ventas - inversion;
-
-
-    /*
-        Margen bruto sobre ventas
-    */
-
-    let margen = 0;
-
-    if (ventas > 0) {
-
-        margen =
-            (ganancia / ventas) * 100;
-
-    }
-
-
-    /*
-        Mostrar resultados
-    */
-
-    document.getElementById(
-        "resultadoCantidad"
-    ).textContent =
-        cantidad;
-
-
-    document.getElementById(
-        "resultadoInversion"
-    ).textContent =
-        formatoMoneda(inversion);
-
-
-    document.getElementById(
-        "resultadoVentas"
-    ).textContent =
-        formatoMoneda(ventas);
-
-
-    document.getElementById(
-        "resultadoGanancia"
-    ).textContent =
-        formatoMoneda(ganancia);
-
-
-    document.getElementById(
-        "resultadoMargen"
-    ).textContent =
-        `${margen.toFixed(1).replace(".", ",")}%`;
 
 }
 
@@ -453,26 +402,11 @@ function formatoMoneda(valor) {
 
 
 /* ==========================================
-   CALCULAR AL CARGAR
-========================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        calcularGanancia();
-
-    }
-);
-
-
-/* ==========================================
    AÑO AUTOMÁTICO
 ========================================== */
 
 const yearElement =
     document.getElementById("year");
-
 
 if (yearElement) {
 
@@ -481,3 +415,438 @@ if (yearElement) {
 
 }
 
+
+/* ==========================================
+   CALCULADORA DE PEDIDOS MAYORISTAS
+========================================== */
+
+/*
+    PRECIOS MAYORISTAS
+
+    20 - 39   = $1.600
+    40 - 79   = $1.500
+    80 - 149  = $1.400
+    150+      = $1.300
+*/
+
+
+const pedidoNombre =
+    document.getElementById("pedidoNombre");
+
+const pedidoCantidad =
+    document.getElementById("pedidoCantidad");
+
+const pedidoLugar =
+    document.getElementById("pedidoLugar");
+
+const pedidoWhatsapp =
+    document.getElementById("pedidoWhatsapp");
+
+const pedidoCotizacion =
+    document.getElementById("pedidoCotizacion");
+
+const pedidoError =
+    document.getElementById("pedidoError");
+
+const pedidoResultadoCantidad =
+    document.getElementById(
+        "pedidoResultadoCantidad"
+    );
+
+const pedidoResultadoPrecio =
+    document.getElementById(
+        "pedidoResultadoPrecio"
+    );
+
+const pedidoResultadoTotal =
+    document.getElementById(
+        "pedidoResultadoTotal"
+    );
+
+
+/* ==========================================
+   OBTENER PRECIO MAYORISTA
+========================================== */
+
+function obtenerPrecioMayorista(cantidad) {
+
+    if (
+        cantidad >= 20 &&
+        cantidad <= 39
+    ) {
+
+        return 1600;
+
+    }
+
+    if (
+        cantidad >= 40 &&
+        cantidad <= 79
+    ) {
+
+        return 1500;
+
+    }
+
+    if (
+        cantidad >= 80 &&
+        cantidad <= 149
+    ) {
+
+        return 1400;
+
+    }
+
+    if (cantidad >= 150) {
+
+        return 1300;
+
+    }
+
+    return null;
+
+}
+
+
+/* ==========================================
+   MOSTRAR ERROR
+========================================== */
+
+function mostrarErrorPedido(mensaje) {
+
+    if (!pedidoError) return;
+
+    pedidoError.textContent =
+        mensaje;
+
+    pedidoError.classList.add(
+        "active"
+    );
+
+}
+
+
+/* ==========================================
+   OCULTAR ERROR
+========================================== */
+
+function ocultarErrorPedido() {
+
+    if (!pedidoError) return;
+
+    pedidoError.textContent =
+        "";
+
+    pedidoError.classList.remove(
+        "active"
+    );
+
+}
+
+
+/* ==========================================
+   ACTUALIZAR COTIZACIÓN
+========================================== */
+
+function actualizarCotizacionPedido() {
+
+    if (
+        !pedidoCantidad ||
+        !pedidoCotizacion
+    ) {
+        return;
+    }
+
+    const cantidad =
+        Number(pedidoCantidad.value);
+
+
+    /*
+        Si no hay cantidad válida,
+        ocultamos la cotización.
+    */
+
+    if (
+        !Number.isInteger(cantidad) ||
+        cantidad < 20
+    ) {
+
+        pedidoCotizacion.classList.remove(
+            "active"
+        );
+
+        return;
+
+    }
+
+
+    /*
+        Obtener precio
+    */
+
+    const precio =
+        obtenerPrecioMayorista(
+            cantidad
+        );
+
+
+    if (!precio) {
+
+        pedidoCotizacion.classList.remove(
+            "active"
+        );
+
+        return;
+
+    }
+
+
+    /*
+        Calcular total
+    */
+
+    const total =
+        cantidad * precio;
+
+
+    /*
+        Mostrar cantidad
+    */
+
+    if (pedidoResultadoCantidad) {
+
+        pedidoResultadoCantidad.textContent =
+            `${cantidad} helados`;
+
+    }
+
+
+    /*
+        Mostrar precio unitario
+    */
+
+    if (pedidoResultadoPrecio) {
+
+        pedidoResultadoPrecio.textContent =
+            formatoMoneda(precio);
+
+    }
+
+
+    /*
+        Mostrar total
+    */
+
+    if (pedidoResultadoTotal) {
+
+        pedidoResultadoTotal.textContent =
+            formatoMoneda(total);
+
+    }
+
+
+    /*
+        Mostrar cotización
+    */
+
+    pedidoCotizacion.classList.add(
+        "active"
+    );
+
+
+    /*
+        Ocultar error
+    */
+
+    ocultarErrorPedido();
+
+}
+
+
+/* ==========================================
+   ACTUALIZAR AL ESCRIBIR CANTIDAD
+========================================== */
+
+if (pedidoCantidad) {
+
+    pedidoCantidad.addEventListener(
+        "input",
+        actualizarCotizacionPedido
+    );
+
+}
+
+
+/* ==========================================
+   ENVIAR PEDIDO POR WHATSAPP
+========================================== */
+
+if (pedidoWhatsapp) {
+
+    pedidoWhatsapp.addEventListener(
+        "click",
+        function() {
+
+            ocultarErrorPedido();
+
+
+            /*
+                VALIDAR NOMBRE
+            */
+
+            const nombre =
+                pedidoNombre
+                    ? pedidoNombre.value.trim()
+                    : "";
+
+
+            if (!nombre) {
+
+                mostrarErrorPedido(
+                    "Por favor escribe tu nombre."
+                );
+
+                if (pedidoNombre) {
+
+                    pedidoNombre.focus();
+
+                }
+
+                return;
+
+            }
+
+
+            /*
+                VALIDAR CANTIDAD
+            */
+
+            const cantidad =
+                pedidoCantidad
+                    ? Number(pedidoCantidad.value)
+                    : 0;
+
+
+            if (
+                !Number.isInteger(cantidad) ||
+                cantidad < 20
+            ) {
+
+                mostrarErrorPedido(
+                    "El pedido mínimo es de 20 helados."
+                );
+
+                if (pedidoCantidad) {
+
+                    pedidoCantidad.focus();
+
+                }
+
+                return;
+
+            }
+
+
+            /*
+                OBTENER PRECIO
+            */
+
+            const precio =
+                obtenerPrecioMayorista(
+                    cantidad
+                );
+
+
+            if (!precio) {
+
+                mostrarErrorPedido(
+                    "No fue posible calcular el precio."
+                );
+
+                return;
+
+            }
+
+
+            /*
+                VALIDAR LUGAR
+            */
+
+            const lugar =
+                pedidoLugar
+                    ? pedidoLugar.value.trim()
+                    : "";
+
+
+            if (!lugar) {
+
+                mostrarErrorPedido(
+                    "Por favor escribe el lugar de entrega."
+                );
+
+                if (pedidoLugar) {
+
+                    pedidoLugar.focus();
+
+                }
+
+                return;
+
+            }
+
+
+            /*
+                CALCULAR TOTAL
+            */
+
+            const total =
+                cantidad * precio;
+
+
+            /*
+                MENSAJE FINAL PARA WHATSAPP
+
+                Solamente contiene:
+
+                - Nombre
+                - Cantidad
+                - Precio unitario
+                - Total
+                - Lugar de entrega
+            */
+
+            const mensaje =
+`🍦 *PEDIDO DE HELADOS*
+
+👤 Nombre: ${nombre}
+
+📦 Cantidad: ${cantidad} helados
+
+💰 Precio unitario: ${formatoMoneda(precio)}
+
+💵 Total: ${formatoMoneda(total)}
+
+📍 Lugar de entrega: ${lugar}`;
+
+
+            /*
+                ABRIR WHATSAPP
+            */
+
+            abrirWhatsApp(mensaje);
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   INICIALIZAR COTIZACIÓN
+========================================== */
+
+if (pedidoCantidad) {
+
+    actualizarCotizacionPedido();
+
+}
