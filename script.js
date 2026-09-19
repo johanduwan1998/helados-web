@@ -5,7 +5,7 @@
 
 // Cambia este número por el WhatsApp real del negocio.
 // Formato: código de país + número, sin +, espacios ni guiones.
-const WHATSAPP = "57+3015901301";
+const WHATSAPP = "573227403563";
 
 
 /* ==========================================
