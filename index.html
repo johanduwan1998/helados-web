@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Helados deliciosos y refrescantes. Compra al detal o conviértete en revendedor.">
+    <meta name="keywords" content="helados, helados artesanales, helados Colombia, venta de helados, mayorista de helados">
+
+    <title>Helados | Sabor que provoca</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+    <header class="navbar" id="navbar">
+
+        <div class="container nav-container">
+
+            <a href="#inicio" class="logo">
+                <span class="logo-icon">🍦</span>
+                <span>HELADOS</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="#inicio">Inicio</a>
+                <a href="#sabores">Sabores</a>
+                <a href="#mayoristas">Mayoristas</a>
+                <a href="#calculadora">Calculadora</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         HERO / PORTADA
+    ========================== -->
+    <section class="hero" id="inicio">
+
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-content">
+
+            <span class="hero-small">
+                🍦 HECHOS PARA DISFRUTAR
+            </span>
+
+            <h1>
+                El sabor que
+                <span>te provoca</span>
+            </h1>
+
+            <p>
+                Refresca tu día con nuestros deliciosos helados.
+                Sabores irresistibles para disfrutar en cualquier momento.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#sabores" class="btn btn-primary">
+                    <i class="fas fa-ice-cream"></i>
+                    Ver sabores
+                </a>
+
+                <a href="#mayoristas" class="btn btn-secondary">
+                    <i class="fas fa-store"></i>
+                    Quiero vender
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PRESENTACIÓN
+    ========================== -->
+    <section class="intro section">
+
+        <div class="container intro-grid">
+
+            <div class="intro-text">
+
+                <span class="section-tag">
+                    NUESTROS HELADOS
+                </span>
+
+                <h2>
+                    Un sabor para cada antojo 🍦
+                </h2>
+
+                <p>
+                    Tenemos diferentes combinaciones para que encuentres
+                    tu favorita. Disfruta nuestros helados, comparte con
+                    tus amigos y refréscate con mucho sabor.
+                </p>
+
+                <p>
+                    ¿Tienes una tienda o quieres comenzar tu propio
+                    emprendimiento? También tenemos opciones para
+                    compras al por mayor.
+                </p>
+
+                <a href="#mayoristas" class="text-link">
+                    Conoce nuestro programa para revendedores
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+            <div class="intro-card">
+
+                <div class="intro-card-icon">
+                    🍦
+                </div>
+
+                <h3>
+                    ¡Antójate!
+                </h3>
+
+                <p>
+                    Un buen helado siempre es una buena idea.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CARRUSEL
+    ========================== -->
+    <section class="carousel-section section" id="galeria">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span class="section-tag">
+                    GALERÍA
+                </span>
+
+                <h2>
+                    Mira lo que tenemos para ti 📸
+                </h2>
+
+                <p>
+                    Elige tu favorito y disfruta de todo el sabor.
+                </p>
+
+            </div>
+
+
+            <div class="carousel" id="carousel">
+
+                <div class="carousel-track" id="carouselTrack">
+
+                    <div class="carousel-slide">
+                        <img src="img/helado-1.jpg" alt="Helado delicioso">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="img/helado-2.jpg" alt="Helado de fruta">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="img/helado-3.jpg" alt="Helado refrescante">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="img/helado-4.jpg" alt="Helado con chamoy">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="img/helado-5.jpg" alt="Nuestros helados">
+                    </div>
+
+                </div>
+
+
+                <button class="carousel-btn carousel-prev" id="carouselPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <button class="carousel-btn carousel-next" id="carouselNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+            </div>
+
+
+            <div class="carousel-dots" id="carouselDots"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SABORES
+    ========================== -->
+    <section class="flavors section" id="sabores">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span class="section-tag">
+                    NUESTRO MENÚ
+                </span>
+
+                <h2>
+                    Elige tu favorito 🥭
+                </h2>
+
+                <p>
+                    Diferentes sabores para diferentes gustos.
+                </p>
+
+            </div>
+
+
+            <div class="flavor-grid">
+
+                <!-- Producto 1 -->
+                <article class="flavor-card">
+
+                    <div class="flavor-image">
+                        <img src="img/helado-1.jpg" alt="Mangobiche">
+
+                        <span class="flavor-badge">
+                            FAVORITO
+                        </span>
+                    </div>
+
+                    <div class="flavor-content">
+
+                        <h3>
+                            Mangobiche
+                        </h3>
+
+                        <p>
+                            Una combinación refrescante con sabor a mango.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>
+                                $2.000
+                            </strong>
+
+                            <button class="order-btn"
+                                    onclick="pedirProducto('Mangobiche')">
+                                Pedir
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Producto 2 -->
+                <article class="flavor-card">
+
+                    <div class="flavor-image">
+                        <img src="img/helado-2.jpg" alt="Mangobiche con Chamoy">
+                    </div>
+
+                    <div class="flavor-content">
+
+                        <h3>
+                            Mangobiche con Chamoy 🌶️
+                        </h3>
+
+                        <p>
+                            Mango con el toque especial del chamoy.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>
+                                $2.000
+                            </strong>
+
+                            <button class="order-btn"
+                                    onclick="pedirProducto('Mangobiche con Chamoy')">
+                                Pedir
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Producto 3 -->
+                <article class="flavor-card">
+
+                    <div class="flavor-image">
+                        <img src="img/helado-3.jpg" alt="Maracumango">
+                    </div>
+
+                    <div class="flavor-content">
+
+                        <h3>
+                            Maracumango
+                        </h3>
+
+                        <p>
+                            Una mezcla tropical llena de sabor.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>
+                                $2.000
+                            </strong>
+
+                            <button class="order-btn"
+                                    onclick="pedirProducto('Maracumango')">
+                                Pedir
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Producto 4 -->
+                <article class="flavor-card">
+
+                    <div class="flavor-image">
+                        <img src="img/helado-4.jpg" alt="Maracumango con Chamoy">
+                    </div>
+
+                    <div class="flavor-content">
+
+                        <h3>
+                            Maracumango con Chamoy 🌶️
+                        </h3>
+
+                        <p>
+                            Dulce, tropical y con un toque picante.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>
+                                $2.000
+                            </strong>
+
+                            <button class="order-btn"
+                                    onclick="pedirProducto('Maracumango con Chamoy')">
+                                Pedir
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Producto 5 -->
+                <article class="flavor-card">
+
+                    <div class="flavor-image">
+                        <img src="img/helado-5.jpg" alt="Combinados">
+                    </div>
+
+                    <div class="flavor-content">
+
+                        <h3>
+                            Combinados
+                        </h3>
+
+                        <p>
+                            Una deliciosa combinación de sabores.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>
+                                $2.000
+                            </strong>
+
+                            <button class="order-btn"
+                                    onclick="pedirProducto('Combinados')">
+                                Pedir
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Producto 6 -->
+                <article class="flavor-card">
+
+                    <div class="flavor-image">
+                        <img src="img/helado-5.jpg" alt="Combinados con Chamoy">
+                    </div>
+
+                    <div class="flavor-content">
+
+                        <h3>
+                            Combinados con Chamoy 🌶️
+                        </h3>
+
+                        <p>
+                            Para quienes disfrutan sabores diferentes.
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <strong>
+                                $2.000
+                            </strong>
+
+                            <button class="order-btn"
+                                    onclick="pedirProducto('Combinados con Chamoy')">
+                                Pedir
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="other-product">
+
+                <div>
+                    <span>También tenemos</span>
+                    <h3>🍧 Bolis</h3>
+                </div>
+
+                <strong>$1.000</strong>
+
+                <button class="order-btn"
+                        onclick="pedirProducto('Boli')">
+                    Pedir por WhatsApp
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAYORISTAS
+    ========================== -->
+    <section class="wholesale section" id="mayoristas">
+
+        <div class="container">
+
+            <div class="wholesale-grid">
+
+                <div class="wholesale-text">
+
+                    <span class="section-tag">
+                        PARA EMPRENDEDORES
+                    </span>
+
+                    <h2>
+                        ¿Quieres vender nuestros helados?
+                    </h2>
+
+                    <p>
+                        Tú puedes convertirte en nuestro próximo
+                        revendedor.
+                    </p>
+
+                    <p>
+                        Si tienes una tienda, cafetería, negocio,
+                        emprendimiento o simplemente quieres comenzar
+                        a vender helados, escríbenos.
+                    </p>
+
+
+                    <div class="benefits">
+
+                        <div class="benefit">
+                            <span>📦</span>
+                            <div>
+                                <h4>Compra por cantidad</h4>
+                                <p>Consulta nuestras opciones mayoristas.</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit">
+                            <span>💰</span>
+                            <div>
+                                <h4>Precio para revendedores</h4>
+                                <p>Obtén un precio especial según la cantidad.</p>
+                            </div>
+                        </div>
+
+                        <div class="benefit">
+                            <span>🚀</span>
+                            <div>
+                                <h4>Empieza tu negocio</h4>
+                                <p>Comienza con la cantidad que se adapte a ti.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <a href="#calculadora" class="btn btn-primary">
+                        <i class="fas fa-calculator"></i>
+                        Calcular mi negocio
+                    </a>
+
+                </div>
+
+
+                <div class="wholesale-card">
+
+                    <div class="wholesale-card-icon">
+                        🚀
+                    </div>
+
+                    <h3>
+                        TU NEGOCIO PUEDE EMPEZAR AQUÍ
+                    </h3>
+
+                    <p>
+                        Compra nuestros productos, véndelos a tus
+                        clientes y genera ingresos.
+                    </p>
+
+                    <div class="wholesale-highlight">
+                        <span>¿Quieres información?</span>
+                        <strong>Escríbenos por WhatsApp</strong>
+                    </div>
+
+                    <button class="btn btn-whatsapp"
+                            onclick="contactarMayorista()">
+                        <i class="fab fa-whatsapp"></i>
+                        Quiero ser revendedor
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CALCULADORA
+    ========================== -->
+    <section class="calculator section" id="calculadora">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span class="section-tag">
+                    HAZ TUS CUENTAS
+                </span>
+
+                <h2>
+                    Calcula tu posible ganancia 💰
+                </h2>
+
+                <p>
+                    Ingresa algunos datos y descubre cuánto podrías
+                    generar vendiendo nuestros helados.
+                </p>
+
+            </div>
+
+
+            <div class="calculator-box">
+
+                <div class="calculator-form">
+
+                    <div class="input-group">
+
+                        <label for="inversion">
+                            💵 ¿Cuánto quieres invertir?
+                        </label>
+
+                        <div class="input-money">
+                            <span>$</span>
+                            <input
+                                type="number"
+                                id="inversion"
+                                value="30000"
+                                min="0"
+                                step="1000">
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="costo">
+                            📦 Costo aproximado por helado
+                        </label>
+
+                        <div class="input-money">
+                            <span>$</span>
+                            <input
+                                type="number"
+                                id="costo"
+                                value="789"
+                                min="1"
+                                step="1">
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="precioVenta">
+                            🏷️ Precio de venta por helado
+                        </label>
+
+                        <div class="input-money">
+                            <span>$</span>
+                            <input
+                                type="number"
+                                id="precioVenta"
+                                value="2000"
+                                min="1"
+                                step="100">
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary calculate-btn"
+                        onclick="calcularGanancia()">
+
+                        <i class="fas fa-calculator"></i>
+                        Calcular
+
+                    </button>
+
+                </div>
+
+
+                <div class="calculator-results">
+
+                    <div class="result-card">
+
+                        <span>
+                            🍦 Producción aproximada
+                        </span>
+
+                        <strong id="resultadoCantidad">
+                            38
+                        </strong>
+
+                        <small>
+                            helados
+                        </small>
+
+                    </div>
+
+
+                    <div class="result-card">
+
+                        <span>
+                            💰 Inversión
+                        </span>
+
+                        <strong id="resultadoInversion">
+                            $30.000
+                        </strong>
+
+                    </div>
+
+
+                    <div class="result-card">
+
+                        <span>
+                            💵 Ventas estimadas
+                        </span>
+
+                        <strong id="resultadoVentas">
+                            $76.000
+                        </strong>
+
+                    </div>
+
+
+                    <div class="result-card result-profit">
+
+                        <span>
+                            📈 Ganancia bruta estimada
+                        </span>
+
+                        <strong id="resultadoGanancia">
+                            $46.000
+                        </strong>
+
+                    </div>
+
+
+                    <div class="margin-result">
+
+                        <span>
+                            Margen bruto sobre ventas
+                        </span>
+
+                        <strong id="resultadoMargen">
+                            60,5%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p class="calculator-note">
+                * Los resultados son estimaciones y no incluyen otros
+                gastos como transporte, electricidad, mano de obra,
+                pérdidas o gastos de comercialización.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         LLAMADO A LA ACCIÓN
+    ========================== -->
+    <section class="cta">
+
+        <div class="container cta-content">
+
+            <span>
+                🍦 ¿YA SE TE ANTOJÓ?
+            </span>
+
+            <h2>
+                Pide tus helados ahora
+            </h2>
+
+            <p>
+                Escríbenos y realiza tu pedido.
+            </p>
+
+            <button class="btn btn-whatsapp"
+                    onclick="hacerPedidoGeneral()">
+
+                <i class="fab fa-whatsapp"></i>
+                Pedir por WhatsApp
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer id="contacto">
+
+        <div class="container footer-grid">
+
+            <div class="footer-brand">
+
+                <div class="logo footer-logo">
+                    <span class="logo-icon">🍦</span>
+                    <span>HELADOS</span>
+                </div>
+
+                <p>
+                    Sabor, frescura y momentos para disfrutar.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Navegación
+                </h4>
+
+                <a href="#inicio">Inicio</a>
+                <a href="#sabores">Sabores</a>
+                <a href="#mayoristas">Mayoristas</a>
+                <a href="#calculadora">Calculadora</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Contacto
+                </h4>
+
+                <a href="#" onclick="contactarWhatsApp(); return false;">
+                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp
+                </a>
+
+                <span>
+                    📍 Colombia
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © <span id="year"></span> Helados. Todos los derechos reservados.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Botón flotante WhatsApp -->
+    <a href="#"
+       class="whatsapp-float"
+       id="whatsappFloat"
+       aria-label="Contactar por WhatsApp">
+
+        <i class="fab fa-whatsapp"></i>
+
+    </a>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
+
