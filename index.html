@@ -640,241 +640,347 @@
     ========================== -->
 
     <section class="wholesale section" id="mayoristas">
-        <!-- =========================
-     CALCULADORA MAYORISTA
-========================== -->
+            <!-- =========================
+                CALCULADORA / CARRITO
+            ========================== -->
 
-<section class="calculator section" id="calculadora">
+            <section class="calculator section" id="calculadora">
 
-    <div class="container">
+                <div class="container">
 
-        <div class="section-heading">
+                    <div class="section-heading">
 
-            <span class="section-tag">
-                COTIZA TU PEDIDO
-            </span>
+                        <span class="section-tag">
+                            COTIZA TU PEDIDO
+                        </span>
 
-            <h2>
-                Calcula tu pedido al por mayor
-            </h2>
+                        <h2>
+                            Arma tu pedido al por mayor
+                        </h2>
 
-            <p>
-                Selecciona la cantidad de helados que quieres comprar
-                y obtén tu cotización automáticamente.
-            </p>
+                        <p>
+                            Elige tus sabores, agrega las cantidades que quieras
+                            y obtén automáticamente el valor de tu pedido.
+                        </p>
 
-        </div>
+                    </div>
 
 
-        <div class="calculator-box calculator-wholesale">
+                    <div class="calculator-box calculator-wholesale">
 
-            <div class="calculator-info">
 
-                <div class="calculator-icon">
-                    🍦
+                        <!-- =========================
+                            INFORMACIÓN
+                        ========================== -->
+
+                        <div class="calculator-info">
+
+                            <div class="calculator-icon">
+                                🍦
+                            </div>
+
+                            <h3>
+                                Precios mayoristas
+                            </h3>
+
+                            <p>
+                                Entre más helados compres, mejor será el precio
+                                por unidad.
+                            </p>
+
+
+                            <div class="wholesale-prices">
+
+                                <div class="wholesale-price">
+
+                                    <span>
+                                        20 - 39 helados
+                                    </span>
+
+                                    <strong>
+                                        $1.600 c/u
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="wholesale-price">
+
+                                    <span>
+                                        40 - 79 helados
+                                    </span>
+
+                                    <strong>
+                                        $1.500 c/u
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="wholesale-price">
+
+                                    <span>
+                                        80 - 149 helados
+                                    </span>
+
+                                    <strong>
+                                        $1.400 c/u
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="wholesale-price">
+
+                                    <span>
+                                        150+ helados
+                                    </span>
+
+                                    <strong>
+                                        $1.300 c/u
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =========================
+                            FORMULARIO
+                        ========================== -->
+
+                        <div class="calculator-form">
+
+
+                            <!-- SABOR -->
+
+                            <div class="input-group">
+
+                                <label for="sabor">
+
+                                    Sabor
+
+                                </label>
+
+
+                                <select id="sabor">
+
+                                    <option value="Mangobiche">
+                                        Mangobiche
+                                    </option>
+
+                                    <option value="Mangobiche con Chamoy">
+                                        Mangobiche con Chamoy
+                                    </option>
+
+                                    <option value="Maracumango">
+                                        Maracumango
+                                    </option>
+
+                                    <option value="Maracumango con Chamoy">
+                                        Maracumango con Chamoy
+                                    </option>
+
+                                    <option value="Combinados">
+                                        Combinados
+                                    </option>
+
+                                    <option value="Combinados con Chamoy">
+                                        Combinados con Chamoy
+                                    </option>
+
+                                    
+                                </select>
+
+                            </div>
+
+
+                            <!-- CANTIDAD -->
+
+                            <div class="input-group">
+
+                                <label for="cantidad">
+
+                                    Cantidad
+
+                                </label>
+
+
+                                <input
+                                    type="number"
+                                    id="cantidad"
+                                    min="1"
+                                    value="1"
+                                    placeholder="Ej: 20"
+                                >
+
+                            </div>
+
+
+                            <!-- AGREGAR -->
+
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-add-product"
+                                onclick="agregarProducto()"
+                            >
+
+                                <i class="fas fa-plus"></i>
+
+                                Agregar al pedido
+
+                            </button>
+
+
+                            <!-- =========================
+                                CARRITO
+                            ========================== -->
+
+                            <div
+                                class="cart-container"
+                                id="cartContainer"
+                            >
+
+                                <div class="cart-empty">
+
+                                    <i class="fas fa-basket-shopping"></i>
+
+                                    <p>
+                                        Tu pedido está vacío
+                                    </p>
+
+                                    <small>
+                                        Agrega sabores para comenzar.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =========================
+                                RESUMEN
+                            ========================== -->
+
+                            <div
+                                class="quote-result"
+                                id="quoteResult"
+                            >
+
+                                <div class="quote-row">
+
+                                    <span>
+                                        Total de helados
+                                    </span>
+
+                                    <strong id="totalCantidad">
+                                        0
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="quote-row">
+
+                                    <span>
+                                        Precio por helado
+                                    </span>
+
+                                    <strong id="precioUnitario">
+                                        $0
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="quote-row total-row">
+
+                                    <span>
+                                        Total
+                                    </span>
+
+                                    <strong id="totalPedido">
+                                        $0
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =========================
+                                DATOS CLIENTE
+                            ========================== -->
+
+                            <div class="input-group">
+
+                                <label for="nombreCliente">
+
+                                    Tu nombre
+
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="nombreCliente"
+                                    placeholder="Escribe tu nombre"
+                                >
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label for="lugarCliente">
+
+                                    Lugar de entrega
+
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="lugarCliente"
+                                    placeholder="Ej: Ubaté, Cundinamarca"
+                                >
+
+                            </div>
+
+
+                            <!-- =========================
+                                WHATSAPP
+                            ========================== -->
+
+                            <button
+                                type="button"
+                                class="btn btn-whatsapp calculator-whatsapp"
+                                onclick="enviarPedidoWhatsApp()"
+                            >
+
+                                <i class="fab fa-whatsapp"></i>
+
+                                Pedir por WhatsApp
+
+                            </button>
+
+
+                            <small class="calculator-help">
+
+                                Pedido mínimo: 20 helados.
+
+                            </small>
+
+
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <h3>
-                    Precios mayoristas
-                </h3>
-
-                <p>
-                    Entre más helados compres, mejor será el precio
-                    por unidad.
-                </p>
-
-
-                <div class="wholesale-prices">
-
-                    <div class="wholesale-price">
-
-                        <span>
-                            20 - 39 helados
-                        </span>
-
-                        <strong>
-                            $1.600 c/u
-                        </strong>
-
-                    </div>
-
-
-                    <div class="wholesale-price">
-
-                        <span>
-                            40 - 79 helados
-                        </span>
-
-                        <strong>
-                            $1.500 c/u
-                        </strong>
-
-                    </div>
-
-
-                    <div class="wholesale-price">
-
-                        <span>
-                            80 - 149 helados
-                        </span>
-
-                        <strong>
-                            $1.400 c/u
-                        </strong>
-
-                    </div>
-
-
-                    <div class="wholesale-price">
-
-                        <span>
-                            150+ helados
-                        </span>
-
-                        <strong>
-                            $1.300 c/u
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="calculator-form">
-
-                <div class="input-group">
-
-                    <label for="pedidoNombre">
-                        Nombre
-                    </label>
-
-                    <input
-                        type="text"
-                        id="pedidoNombre"
-                        placeholder="Escribe tu nombre"
-                    >
-
-                </div>
-
-
-                <div class="input-group">
-
-                    <label for="pedidoCantidad">
-                        Cantidad de helados
-                    </label>
-
-                    <input
-                        type="number"
-                        id="pedidoCantidad"
-                        min="20"
-                        step="1"
-                        placeholder="Mínimo 20"
-                    >
-
-                    <small class="calculator-help">
-                        Pedido mínimo: 20 helados
-                    </small>
-
-                </div>
-
-
-                <div class="input-group">
-
-                    <label for="pedidoLugar">
-                        Lugar de entrega
-                    </label>
-
-                    <input
-                        type="text"
-                        id="pedidoLugar"
-                        placeholder="Ej: Ubaté, Cundinamarca"
-                    >
-
-                </div>
-
-
-                <div
-                    id="pedidoError"
-                    class="pedido-error"
-                ></div>
-
-
-                <div
-                    id="pedidoCotizacion"
-                    class="pedido-cotizacion"
-                >
-
-                    <div class="cotizacion-header">
-
-                        <span>
-                            🍦 Tu cotización
-                        </span>
-
-                    </div>
-
-
-                    <div class="cotizacion-row">
-
-                        <span>
-                            Cantidad
-                        </span>
-
-                        <strong id="pedidoResultadoCantidad">
-                            0
-                        </strong>
-
-                    </div>
-
-
-                    <div class="cotizacion-row">
-
-                        <span>
-                            Precio por helado
-                        </span>
-
-                        <strong id="pedidoResultadoPrecio">
-                            $0
-                        </strong>
-
-                    </div>
-
-
-                    <div class="cotizacion-total">
-
-                        <span>
-                            Total del pedido
-                        </span>
-
-                        <strong id="pedidoResultadoTotal">
-                            $0
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="btn btn-whatsapp calculator-whatsapp"
-                    id="pedidoWhatsapp"
-                >
-
-                    <i class="fab fa-whatsapp"></i>
-
-                    Pedir por WhatsApp
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
+            </section>
         <div class="container">
 
             <div class="wholesale-content">

@@ -3,7 +3,7 @@
 ========================================== */
 
 // WhatsApp del negocio
-// Formato: código de país + número, sin +, espacios ni guiones.
+// Código de país + número, sin +, espacios ni guiones.
 const WHATSAPP = "573227403563";
 
 
@@ -73,8 +73,6 @@ const carouselTrack =
 const carouselSlides =
     document.querySelectorAll(".carousel-slide");
 
-// IMPORTANTE:
-// Estos IDs coinciden con tu index.html
 const carouselPrev =
     document.getElementById("prevBtn");
 
@@ -89,19 +87,15 @@ let currentSlide = 0;
 let carouselInterval;
 
 
-/*
-    Verificar que exista el carrusel
-*/
+/* ==========================================
+   INICIALIZAR CARRUSEL
+========================================== */
 
 if (
     carouselTrack &&
     carouselSlides.length > 0 &&
     carouselDots
 ) {
-
-    /*
-        Crear los puntos del carrusel
-    */
 
     carouselSlides.forEach((slide, index) => {
 
@@ -135,17 +129,13 @@ if (
     });
 
 
-    /*
-        Obtener los puntos después de crearlos
-    */
-
     const dots =
         document.querySelectorAll(".carousel-dot");
 
 
-    /*
-        ACTUALIZAR CARRUSEL
-    */
+    /* ==========================================
+       ACTUALIZAR CARRUSEL
+    ========================================== */
 
     function updateCarousel() {
 
@@ -165,9 +155,9 @@ if (
     }
 
 
-    /*
-        SIGUIENTE IMAGEN
-    */
+    /* ==========================================
+       SIGUIENTE IMAGEN
+    ========================================== */
 
     function nextSlide() {
 
@@ -186,9 +176,9 @@ if (
     }
 
 
-    /*
-        IMAGEN ANTERIOR
-    */
+    /* ==========================================
+       IMAGEN ANTERIOR
+    ========================================== */
 
     function previousSlide() {
 
@@ -206,9 +196,9 @@ if (
     }
 
 
-    /*
-        BOTÓN DERECHA
-    */
+    /* ==========================================
+       BOTÓN DERECHA
+    ========================================== */
 
     if (carouselNext) {
 
@@ -226,9 +216,9 @@ if (
     }
 
 
-    /*
-        BOTÓN IZQUIERDA
-    */
+    /* ==========================================
+       BOTÓN IZQUIERDA
+    ========================================== */
 
     if (carouselPrev) {
 
@@ -246,9 +236,9 @@ if (
     }
 
 
-    /*
-        CARRUSEL AUTOMÁTICO
-    */
+    /* ==========================================
+       CARRUSEL AUTOMÁTICO
+    ========================================== */
 
     function startCarousel() {
 
@@ -260,9 +250,9 @@ if (
     }
 
 
-    /*
-        REINICIAR AUTOMÁTICO
-    */
+    /* ==========================================
+       REINICIAR AUTOMÁTICO
+    ========================================== */
 
     function restartCarousel() {
 
@@ -272,10 +262,6 @@ if (
 
     }
 
-
-    /*
-        Iniciar carrusel
-    */
 
     startCarousel();
 
@@ -356,14 +342,6 @@ function contactarWhatsApp() {
    BOTÓN WHATSAPP FLOTANTE
 ========================================== */
 
-/*
-    En tu HTML actual el botón flotante
-    usa onclick="contactarWhatsApp()".
-
-    Por eso no necesitamos agregar otro
-    evento aquí.
-*/
-
 const whatsappFloat =
     document.getElementById("whatsappFloat");
 
@@ -417,51 +395,59 @@ if (yearElement) {
 
 
 /* ==========================================
-   CALCULADORA DE PEDIDOS MAYORISTAS
+   CARRITO MAYORISTA
 ========================================== */
 
 /*
-    PRECIOS MAYORISTAS
+    IMPORTANTE:
 
-    20 - 39   = $1.600
-    40 - 79   = $1.500
-    80 - 149  = $1.400
-    150+      = $1.300
+    BOLIS NO SE VENDE AL POR MAYOR.
+
+    Precios mayoristas:
+
+    20 - 39   = $1.600 c/u
+    40 - 79   = $1.500 c/u
+    80 - 149  = $1.400 c/u
+    150+      = $1.300 c/u
 */
 
 
-const pedidoNombre =
-    document.getElementById("pedidoNombre");
+let carrito = [];
 
-const pedidoCantidad =
-    document.getElementById("pedidoCantidad");
 
-const pedidoLugar =
-    document.getElementById("pedidoLugar");
+/* ==========================================
+   ELEMENTOS DE LA CALCULADORA
+========================================== */
 
-const pedidoWhatsapp =
-    document.getElementById("pedidoWhatsapp");
+const saborSelect =
+    document.getElementById("sabor");
 
-const pedidoCotizacion =
-    document.getElementById("pedidoCotizacion");
+const cantidadInput =
+    document.getElementById("cantidad");
+
+const cartContainer =
+    document.getElementById("cartContainer");
+
+const totalCantidadElement =
+    document.getElementById("totalCantidad");
+
+const precioUnitarioElement =
+    document.getElementById("precioUnitario");
+
+const totalPedidoElement =
+    document.getElementById("totalPedido");
+
+const nombreCliente =
+    document.getElementById("nombreCliente");
+
+const lugarCliente =
+    document.getElementById("lugarCliente");
+
+const quoteResult =
+    document.getElementById("quoteResult");
 
 const pedidoError =
     document.getElementById("pedidoError");
-
-const pedidoResultadoCantidad =
-    document.getElementById(
-        "pedidoResultadoCantidad"
-    );
-
-const pedidoResultadoPrecio =
-    document.getElementById(
-        "pedidoResultadoPrecio"
-    );
-
-const pedidoResultadoTotal =
-    document.getElementById(
-        "pedidoResultadoTotal"
-    );
 
 
 /* ==========================================
@@ -509,6 +495,17 @@ function obtenerPrecioMayorista(cantidad) {
 
 
 /* ==========================================
+   VERIFICAR SI ES PRODUCTO MAYORISTA
+========================================== */
+
+function esProductoMayorista(sabor) {
+
+    return sabor !== "Bolis";
+
+}
+
+
+/* ==========================================
    MOSTRAR ERROR
 ========================================== */
 
@@ -545,134 +542,449 @@ function ocultarErrorPedido() {
 
 
 /* ==========================================
-   ACTUALIZAR COTIZACIÓN
+   AGREGAR PRODUCTO AL CARRITO
 ========================================== */
 
-function actualizarCotizacionPedido() {
+function agregarProducto() {
 
-    if (
-        !pedidoCantidad ||
-        !pedidoCotizacion
-    ) {
+    ocultarErrorPedido();
+
+
+    /* ==========================================
+       VALIDAR SABOR
+    ========================================== */
+
+    if (!saborSelect) {
+
         return;
+
     }
 
+
+    const sabor =
+        saborSelect.value;
+
+
+    /* ==========================================
+       SEGURIDAD: BOLIS NO MAYORISTA
+    ========================================== */
+
+    if (!esProductoMayorista(sabor)) {
+
+        mostrarErrorPedido(
+            "Los Bolis no están disponibles para pedidos al por mayor."
+        );
+
+        return;
+
+    }
+
+
+    /* ==========================================
+       VALIDAR CANTIDAD
+    ========================================== */
+
     const cantidad =
-        Number(pedidoCantidad.value);
+        Number(cantidadInput.value);
 
-
-    /*
-        Si no hay cantidad válida,
-        ocultamos la cotización.
-    */
 
     if (
         !Number.isInteger(cantidad) ||
-        cantidad < 20
+        cantidad < 1
     ) {
 
-        pedidoCotizacion.classList.remove(
-            "active"
+        mostrarErrorPedido(
+            "Ingresa una cantidad válida."
         );
+
+        if (cantidadInput) {
+
+            cantidadInput.focus();
+
+        }
 
         return;
 
     }
 
 
-    /*
-        Obtener precio
-    */
+    /* ==========================================
+       BUSCAR PRODUCTO EXISTENTE
+    ========================================== */
 
-    const precio =
-        obtenerPrecioMayorista(
-            cantidad
+    const productoExistente =
+        carrito.find(
+            producto =>
+                producto.sabor === sabor
         );
 
 
-    if (!precio) {
+    if (productoExistente) {
 
-        pedidoCotizacion.classList.remove(
-            "active"
-        );
+        productoExistente.cantidad +=
+            cantidad;
 
-        return;
+    } else {
 
-    }
+        carrito.push({
 
+            sabor: sabor,
 
-    /*
-        Calcular total
-    */
+            cantidad: cantidad
 
-    const total =
-        cantidad * precio;
-
-
-    /*
-        Mostrar cantidad
-    */
-
-    if (pedidoResultadoCantidad) {
-
-        pedidoResultadoCantidad.textContent =
-            `${cantidad} helados`;
+        });
 
     }
 
 
-    /*
-        Mostrar precio unitario
-    */
+    /* ==========================================
+       LIMPIAR CANTIDAD
+    ========================================== */
 
-    if (pedidoResultadoPrecio) {
-
-        pedidoResultadoPrecio.textContent =
-            formatoMoneda(precio);
-
-    }
+    cantidadInput.value = 1;
 
 
-    /*
-        Mostrar total
-    */
+    /* ==========================================
+       ACTUALIZAR CARRITO
+    ========================================== */
 
-    if (pedidoResultadoTotal) {
-
-        pedidoResultadoTotal.textContent =
-            formatoMoneda(total);
-
-    }
-
-
-    /*
-        Mostrar cotización
-    */
-
-    pedidoCotizacion.classList.add(
-        "active"
-    );
-
-
-    /*
-        Ocultar error
-    */
-
-    ocultarErrorPedido();
+    actualizarCarrito();
 
 }
 
 
 /* ==========================================
-   ACTUALIZAR AL ESCRIBIR CANTIDAD
+   CAMBIAR CANTIDAD DEL PRODUCTO
 ========================================== */
 
-if (pedidoCantidad) {
+function cambiarCantidad(index, cambio) {
 
-    pedidoCantidad.addEventListener(
-        "input",
-        actualizarCotizacionPedido
+    if (!carrito[index]) return;
+
+
+    carrito[index].cantidad +=
+        cambio;
+
+
+    if (
+        carrito[index].cantidad <= 0
+    ) {
+
+        carrito.splice(index, 1);
+
+    }
+
+
+    actualizarCarrito();
+
+}
+
+
+/* ==========================================
+   ELIMINAR PRODUCTO
+========================================== */
+
+function eliminarProducto(index) {
+
+    if (!carrito[index]) return;
+
+    carrito.splice(index, 1);
+
+    actualizarCarrito();
+
+}
+
+
+/* ==========================================
+   CALCULAR TOTAL DE HELADOS
+========================================== */
+
+function obtenerCantidadTotal() {
+
+    return carrito.reduce(
+        (total, producto) =>
+            total + producto.cantidad,
+        0
     );
+
+}
+
+
+/* ==========================================
+   ACTUALIZAR CARRITO
+========================================== */
+
+function actualizarCarrito() {
+
+    if (!cartContainer) return;
+
+
+    /* ==========================================
+       CARRITO VACÍO
+    ========================================== */
+
+    if (carrito.length === 0) {
+
+        cartContainer.innerHTML = `
+
+            <div class="cart-empty">
+
+                <i class="fas fa-basket-shopping"></i>
+
+                <p>
+                    Tu pedido está vacío
+                </p>
+
+                <small>
+                    Agrega sabores para comenzar.
+                </small>
+
+            </div>
+
+        `;
+
+
+        actualizarResumen();
+
+        return;
+
+    }
+
+
+    /* ==========================================
+       MOSTRAR PRODUCTOS
+    ========================================== */
+
+    cartContainer.innerHTML = "";
+
+
+    carrito.forEach(
+        (producto, index) => {
+
+            const item =
+                document.createElement("div");
+
+            item.classList.add(
+                "cart-item"
+            );
+
+
+            item.innerHTML = `
+
+                <div class="cart-item-info">
+
+                    <strong>
+                        ${producto.sabor}
+                    </strong>
+
+                    <small>
+                        ${producto.cantidad} helado${producto.cantidad !== 1 ? "s" : ""}
+                    </small>
+
+                </div>
+
+
+                <div class="cart-item-controls">
+
+                    <button
+                        type="button"
+                        onclick="cambiarCantidad(${index}, -1)"
+                        aria-label="Disminuir cantidad"
+                    >
+                        <i class="fas fa-minus"></i>
+                    </button>
+
+
+                    <span>
+                        ${producto.cantidad}
+                    </span>
+
+
+                    <button
+                        type="button"
+                        onclick="cambiarCantidad(${index}, 1)"
+                        aria-label="Aumentar cantidad"
+                    >
+                        <i class="fas fa-plus"></i>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="cart-delete"
+                        onclick="eliminarProducto(${index})"
+                        aria-label="Eliminar producto"
+                    >
+                        <i class="fas fa-trash"></i>
+                    </button>
+
+                </div>
+
+            `;
+
+
+            cartContainer.appendChild(item);
+
+        }
+    );
+
+
+    actualizarResumen();
+
+}
+
+
+/* ==========================================
+   ACTUALIZAR RESUMEN
+========================================== */
+
+function actualizarResumen() {
+
+    const cantidadTotal =
+        obtenerCantidadTotal();
+
+
+    /* ==========================================
+       SI NO HAY PRODUCTOS
+    ========================================== */
+
+    if (cantidadTotal === 0) {
+
+        if (totalCantidadElement) {
+
+            totalCantidadElement.textContent =
+                "0";
+
+        }
+
+        if (precioUnitarioElement) {
+
+            precioUnitarioElement.textContent =
+                "$0";
+
+        }
+
+        if (totalPedidoElement) {
+
+            totalPedidoElement.textContent =
+                "$0";
+
+        }
+
+        if (quoteResult) {
+
+            quoteResult.classList.remove(
+                "active"
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    /* ==========================================
+       OBTENER PRECIO
+    ========================================== */
+
+    const precio =
+        obtenerPrecioMayorista(
+            cantidadTotal
+        );
+
+
+    /* ==========================================
+       MENOS DE 20
+    ========================================== */
+
+    if (!precio) {
+
+        if (totalCantidadElement) {
+
+            totalCantidadElement.textContent =
+                cantidadTotal;
+
+        }
+
+        if (precioUnitarioElement) {
+
+            precioUnitarioElement.textContent =
+                "Desde $1.600";
+
+        }
+
+        if (totalPedidoElement) {
+
+            totalPedidoElement.textContent =
+                "Pendiente";
+
+        }
+
+        if (quoteResult) {
+
+            quoteResult.classList.add(
+                "active"
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    /* ==========================================
+       CALCULAR TOTAL
+    ========================================== */
+
+    const total =
+        cantidadTotal * precio;
+
+
+    /* ==========================================
+       MOSTRAR CANTIDAD
+    ========================================== */
+
+    if (totalCantidadElement) {
+
+        totalCantidadElement.textContent =
+            `${cantidadTotal}`;
+
+    }
+
+
+    /* ==========================================
+       MOSTRAR PRECIO UNITARIO
+    ========================================== */
+
+    if (precioUnitarioElement) {
+
+        precioUnitarioElement.textContent =
+            formatoMoneda(precio);
+
+    }
+
+
+    /* ==========================================
+       MOSTRAR TOTAL
+    ========================================== */
+
+    if (totalPedidoElement) {
+
+        totalPedidoElement.textContent =
+            formatoMoneda(total);
+
+    }
+
+
+    if (quoteResult) {
+
+        quoteResult.classList.add(
+            "active"
+        );
+
+    }
 
 }
 
@@ -681,172 +993,178 @@ if (pedidoCantidad) {
    ENVIAR PEDIDO POR WHATSAPP
 ========================================== */
 
-if (pedidoWhatsapp) {
+function enviarPedidoWhatsApp() {
 
-    pedidoWhatsapp.addEventListener(
-        "click",
-        function() {
-
-            ocultarErrorPedido();
+    ocultarErrorPedido();
 
 
-            /*
-                VALIDAR NOMBRE
-            */
+    /* ==========================================
+       VALIDAR CARRITO
+    ========================================== */
 
-            const nombre =
-                pedidoNombre
-                    ? pedidoNombre.value.trim()
-                    : "";
+    if (carrito.length === 0) {
 
+        mostrarErrorPedido(
+            "Agrega al menos un sabor a tu pedido."
+        );
 
-            if (!nombre) {
+        return;
 
-                mostrarErrorPedido(
-                    "Por favor escribe tu nombre."
-                );
-
-                if (pedidoNombre) {
-
-                    pedidoNombre.focus();
-
-                }
-
-                return;
-
-            }
+    }
 
 
-            /*
-                VALIDAR CANTIDAD
-            */
+    /* ==========================================
+       CANTIDAD TOTAL
+    ========================================== */
 
-            const cantidad =
-                pedidoCantidad
-                    ? Number(pedidoCantidad.value)
-                    : 0;
+    const cantidadTotal =
+        obtenerCantidadTotal();
 
 
-            if (
-                !Number.isInteger(cantidad) ||
-                cantidad < 20
-            ) {
+    /* ==========================================
+       VALIDAR MÍNIMO
+    ========================================== */
 
-                mostrarErrorPedido(
-                    "El pedido mínimo es de 20 helados."
-                );
+    if (cantidadTotal < 20) {
 
-                if (pedidoCantidad) {
+        mostrarErrorPedido(
+            "El pedido mínimo al por mayor es de 20 helados."
+        );
 
-                    pedidoCantidad.focus();
+        return;
 
-                }
-
-                return;
-
-            }
+    }
 
 
-            /*
-                OBTENER PRECIO
-            */
+    /* ==========================================
+       OBTENER PRECIO
+    ========================================== */
 
-            const precio =
-                obtenerPrecioMayorista(
-                    cantidad
-                );
-
-
-            if (!precio) {
-
-                mostrarErrorPedido(
-                    "No fue posible calcular el precio."
-                );
-
-                return;
-
-            }
+    const precio =
+        obtenerPrecioMayorista(
+            cantidadTotal
+        );
 
 
-            /*
-                VALIDAR LUGAR
-            */
+    if (!precio) {
 
-            const lugar =
-                pedidoLugar
-                    ? pedidoLugar.value.trim()
-                    : "";
+        mostrarErrorPedido(
+            "No fue posible calcular el precio del pedido."
+        );
 
+        return;
 
-            if (!lugar) {
-
-                mostrarErrorPedido(
-                    "Por favor escribe el lugar de entrega."
-                );
-
-                if (pedidoLugar) {
-
-                    pedidoLugar.focus();
-
-                }
-
-                return;
-
-            }
+    }
 
 
-            /*
-                CALCULAR TOTAL
-            */
+    /* ==========================================
+       VALIDAR NOMBRE
+    ========================================== */
 
-            const total =
-                cantidad * precio;
-
-
-            /*
-                MENSAJE FINAL PARA WHATSAPP
-
-                Solamente contiene:
-
-                - Nombre
-                - Cantidad
-                - Precio unitario
-                - Total
-                - Lugar de entrega
-            */
-
-            const mensaje =
-`🍦 *PEDIDO DE HELADOS*
-
-👤 Nombre: ${nombre}
-
-📦 Cantidad: ${cantidad} helados
-
-💰 Precio unitario: ${formatoMoneda(precio)}
-
-💵 Total: ${formatoMoneda(total)}
-
-📍 Lugar de entrega: ${lugar}`;
+    const nombre =
+        nombreCliente
+            ? nombreCliente.value.trim()
+            : "";
 
 
-            /*
-                ABRIR WHATSAPP
-            */
+    if (!nombre) {
 
-            abrirWhatsApp(mensaje);
+        mostrarErrorPedido(
+            "Por favor escribe tu nombre."
+        );
+
+        if (nombreCliente) {
+
+            nombreCliente.focus();
 
         }
-    );
+
+        return;
+
+    }
+
+
+    /* ==========================================
+       VALIDAR LUGAR
+    ========================================== */
+
+    const lugar =
+        lugarCliente
+            ? lugarCliente.value.trim()
+            : "";
+
+
+    if (!lugar) {
+
+        mostrarErrorPedido(
+            "Por favor escribe el lugar de entrega."
+        );
+
+        if (lugarCliente) {
+
+            lugarCliente.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    /* ==========================================
+       CALCULAR TOTAL
+    ========================================== */
+
+    const total =
+        cantidadTotal * precio;
+
+
+    /* ==========================================
+       CONSTRUIR DETALLE DEL PEDIDO
+    ========================================== */
+
+    let detalleProductos = "";
+
+
+    carrito.forEach(producto => {
+
+        detalleProductos +=
+            `• ${producto.sabor}: ${producto.cantidad} unidades\n`;
+
+    });
+
+
+    /* ==========================================
+       MENSAJE WHATSAPP
+    ========================================== */
+
+    const mensaje =
+`🍦 *PEDIDO DE HELADOS DULCE FRÍO*
+
+👤 *Nombre:* ${nombre}
+
+📦 *Pedido:*
+${detalleProductos}
+📊 *Total de helados:* ${cantidadTotal}
+
+💰 *Precio unitario:* ${formatoMoneda(precio)}
+
+💵 *Total:* ${formatoMoneda(total)}
+
+📍 *Lugar de entrega:* ${lugar}`;
+
+
+    /* ==========================================
+       ABRIR WHATSAPP
+    ========================================== */
+
+    abrirWhatsApp(mensaje);
 
 }
 
 
 /* ==========================================
-   INICIALIZAR COTIZACIÓN
+   INICIALIZAR CALCULADORA
 ========================================== */
 
-if (pedidoCantidad) {
-
-    actualizarCotizacionPedido();
-
-}
+actualizarCarrito();
