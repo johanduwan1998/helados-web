@@ -398,19 +398,13 @@ if (yearElement) {
    CARRITO MAYORISTA
 ========================================== */
 
-/*
-    IMPORTANTE:
-
-    BOLIS NO SE VENDE AL POR MAYOR.
-
-    Precios mayoristas:
-
-    20 - 39   = $1.600 c/u
-    40 - 79   = $1.500 c/u
-    80 - 149  = $1.400 c/u
-    150+      = $1.300 c/u
-*/
-
+// Pedido mínimo: 15 helados.
+// Bolis no está disponible al por mayor.
+// Precios:
+// 15 - 35   = $1.600 c/u
+// 36 - 75   = $1.500 c/u
+// 76 - 149  = $1.450 c/u
+// 150+      = $1.400 c/u
 
 let carrito = [];
 
@@ -419,35 +413,21 @@ let carrito = [];
    ELEMENTOS DE LA CALCULADORA
 ========================================== */
 
-const saborSelect =
-    document.getElementById("sabor");
+const saborSelect = document.getElementById("sabor");
+const cantidadInput = document.getElementById("cantidad");
+const cartContainer = document.getElementById("cartContainer");
 
-const cantidadInput =
-    document.getElementById("cantidad");
+const totalCantidadElement = document.getElementById("totalCantidad");
+const precioUnitarioElement = document.getElementById("precioUnitario");
+const totalPedidoElement = document.getElementById("totalPedido");
 
-const cartContainer =
-    document.getElementById("cartContainer");
+const nombreCliente = document.getElementById("nombreCliente");
+const lugarCliente = document.getElementById("lugarCliente");
+const quoteResult = document.getElementById("quoteResult");
 
-const totalCantidadElement =
-    document.getElementById("totalCantidad");
-
-const precioUnitarioElement =
-    document.getElementById("precioUnitario");
-
-const totalPedidoElement =
-    document.getElementById("totalPedido");
-
-const nombreCliente =
-    document.getElementById("nombreCliente");
-
-const lugarCliente =
-    document.getElementById("lugarCliente");
-
-const quoteResult =
-    document.getElementById("quoteResult");
-
-const pedidoError =
-    document.getElementById("pedidoError");
+// El HTML actual no incluye un elemento con id="pedidoError".
+// Se mostrará el mensaje dentro de la calculadora.
+const pedidoError = document.getElementById("pedidoError");
 
 
 /* ==========================================
@@ -456,52 +436,21 @@ const pedidoError =
 
 function obtenerPrecioMayorista(cantidad) {
 
-    if (
-        cantidad >= 20 &&
-        cantidad <= 39
-    ) {
-
-        return 1600;
-
-    }
-
-    if (
-        cantidad >= 40 &&
-        cantidad <= 79
-    ) {
-
-        return 1500;
-
-    }
-
-    if (
-        cantidad >= 80 &&
-        cantidad <= 149
-    ) {
-
-        return 1400;
-
-    }
-
-    if (cantidad >= 150) {
-
-        return 1300;
-
-    }
+    if (cantidad >= 150) return 1400;
+    if (cantidad >= 76) return 1450;
+    if (cantidad >= 36) return 1500;
+    if (cantidad >= 15) return 1600;
 
     return null;
-
 }
 
 
 /* ==========================================
-   VERIFICAR SI ES PRODUCTO MAYORISTA
+   VALIDAR PRODUCTOS MAYORISTAS
 ========================================== */
 
 function esProductoMayorista(sabor) {
-
-    return sabor !== "Bolis";
-
+    return sabor.trim().toLowerCase() !== "bolis";
 }
 
 
@@ -511,15 +460,30 @@ function esProductoMayorista(sabor) {
 
 function mostrarErrorPedido(mensaje) {
 
-    if (!pedidoError) return;
+    if (pedidoError) {
+        pedidoError.textContent = mensaje;
+        pedidoError.classList.add("active");
+        return;
+    }
 
-    pedidoError.textContent =
-        mensaje;
+    let error = document.getElementById("pedidoError");
 
-    pedidoError.classList.add(
-        "active"
-    );
+    if (!error) {
+        error = document.createElement("p");
+        error.id = "pedidoError";
+        error.className = "pedido-error active";
+        error.style.color = "#c62828";
+        error.style.marginTop = "10px";
 
+        if (cartContainer) {
+            cartContainer.insertAdjacentElement("afterend", error);
+        } else {
+            return;
+        }
+    }
+
+    error.textContent = mensaje;
+    error.classList.add("active");
 }
 
 
@@ -529,15 +493,19 @@ function mostrarErrorPedido(mensaje) {
 
 function ocultarErrorPedido() {
 
-    if (!pedidoError) return;
+    if (!pedidoError) {
+        const error = document.getElementById("pedidoError");
 
-    pedidoError.textContent =
-        "";
+        if (error) {
+            error.textContent = "";
+            error.classList.remove("active");
+        }
 
-    pedidoError.classList.remove(
-        "active"
-    );
+        return;
+    }
 
+    pedidoError.textContent = "";
+    pedidoError.classList.remove("active");
 }
 
 
@@ -549,107 +517,40 @@ function agregarProducto() {
 
     ocultarErrorPedido();
 
+    if (!saborSelect || !cantidadInput) return;
 
-    /* ==========================================
-       VALIDAR SABOR
-    ========================================== */
-
-    if (!saborSelect) {
-
-        return;
-
-    }
-
-
-    const sabor =
-        saborSelect.value;
-
-
-    /* ==========================================
-       SEGURIDAD: BOLIS NO MAYORISTA
-    ========================================== */
+    const sabor = saborSelect.value;
+    const cantidad = Number(cantidadInput.value);
 
     if (!esProductoMayorista(sabor)) {
-
         mostrarErrorPedido(
             "Los Bolis no están disponibles para pedidos al por mayor."
         );
-
         return;
-
     }
 
-
-    /* ==========================================
-       VALIDAR CANTIDAD
-    ========================================== */
-
-    const cantidad =
-        Number(cantidadInput.value);
-
-
-    if (
-        !Number.isInteger(cantidad) ||
-        cantidad < 1
-    ) {
-
-        mostrarErrorPedido(
-            "Ingresa una cantidad válida."
-        );
-
-        if (cantidadInput) {
-
-            cantidadInput.focus();
-
-        }
-
+    if (!Number.isInteger(cantidad) || cantidad < 1) {
+        mostrarErrorPedido("Ingresa una cantidad válida.");
+        cantidadInput.focus();
         return;
-
     }
 
-
-    /* ==========================================
-       BUSCAR PRODUCTO EXISTENTE
-    ========================================== */
-
-    const productoExistente =
-        carrito.find(
-            producto =>
-                producto.sabor === sabor
-        );
-
+    const productoExistente = carrito.find(
+        producto => producto.sabor === sabor
+    );
 
     if (productoExistente) {
-
-        productoExistente.cantidad +=
-            cantidad;
-
+        productoExistente.cantidad += cantidad;
     } else {
-
         carrito.push({
-
             sabor: sabor,
-
             cantidad: cantidad
-
         });
-
     }
-
-
-    /* ==========================================
-       LIMPIAR CANTIDAD
-    ========================================== */
 
     cantidadInput.value = 1;
 
-
-    /* ==========================================
-       ACTUALIZAR CARRITO
-    ========================================== */
-
     actualizarCarrito();
-
 }
 
 
@@ -661,22 +562,13 @@ function cambiarCantidad(index, cambio) {
 
     if (!carrito[index]) return;
 
+    carrito[index].cantidad += cambio;
 
-    carrito[index].cantidad +=
-        cambio;
-
-
-    if (
-        carrito[index].cantidad <= 0
-    ) {
-
+    if (carrito[index].cantidad <= 0) {
         carrito.splice(index, 1);
-
     }
 
-
     actualizarCarrito();
-
 }
 
 
@@ -691,22 +583,19 @@ function eliminarProducto(index) {
     carrito.splice(index, 1);
 
     actualizarCarrito();
-
 }
 
 
 /* ==========================================
-   CALCULAR TOTAL DE HELADOS
+   OBTENER CANTIDAD TOTAL
 ========================================== */
 
 function obtenerCantidadTotal() {
 
     return carrito.reduce(
-        (total, producto) =>
-            total + producto.cantidad,
+        (total, producto) => total + producto.cantidad,
         0
     );
-
 }
 
 
@@ -718,119 +607,73 @@ function actualizarCarrito() {
 
     if (!cartContainer) return;
 
-
-    /* ==========================================
-       CARRITO VACÍO
-    ========================================== */
+    ocultarErrorPedido();
 
     if (carrito.length === 0) {
 
         cartContainer.innerHTML = `
-
             <div class="cart-empty">
-
                 <i class="fas fa-basket-shopping"></i>
-
-                <p>
-                    Tu pedido está vacío
-                </p>
-
-                <small>
-                    Agrega sabores para comenzar.
-                </small>
-
+                <p>Tu pedido está vacío</p>
+                <small>Agrega sabores para comenzar.</small>
             </div>
-
         `;
 
-
         actualizarResumen();
-
         return;
-
     }
-
-
-    /* ==========================================
-       MOSTRAR PRODUCTOS
-    ========================================== */
 
     cartContainer.innerHTML = "";
 
+    carrito.forEach((producto, index) => {
 
-    carrito.forEach(
-        (producto, index) => {
+        const item = document.createElement("div");
+        item.classList.add("cart-item");
 
-            const item =
-                document.createElement("div");
+        const info = document.createElement("div");
+        info.classList.add("cart-item-info");
 
-            item.classList.add(
-                "cart-item"
-            );
+        const nombre = document.createElement("strong");
+        nombre.textContent = producto.sabor;
 
+        const detalle = document.createElement("small");
+        detalle.textContent =
+            `${producto.cantidad} helado${producto.cantidad !== 1 ? "s" : ""}`;
 
-            item.innerHTML = `
+        info.appendChild(nombre);
+        info.appendChild(detalle);
 
-                <div class="cart-item-info">
+        const controles = document.createElement("div");
+        controles.classList.add("cart-item-controls");
 
-                    <strong>
-                        ${producto.sabor}
-                    </strong>
+        const btnMenos = document.createElement("button");
+        btnMenos.type = "button";
+        btnMenos.innerHTML = '<i class="fas fa-minus"></i>';
+        btnMenos.setAttribute("aria-label", "Disminuir cantidad");
+        btnMenos.addEventListener("click", () => cambiarCantidad(index, -1));
 
-                    <small>
-                        ${producto.cantidad} helado${producto.cantidad !== 1 ? "s" : ""}
-                    </small>
+        const cantidad = document.createElement("span");
+        cantidad.textContent = producto.cantidad;
 
-                </div>
+        const btnMas = document.createElement("button");
+        btnMas.type = "button";
+        btnMas.innerHTML = '<i class="fas fa-plus"></i>';
+        btnMas.setAttribute("aria-label", "Aumentar cantidad");
+        btnMas.addEventListener("click", () => cambiarCantidad(index, 1));
 
+        const btnEliminar = document.createElement("button");
+        btnEliminar.type = "button";
+        btnEliminar.classList.add("cart-delete");
+        btnEliminar.innerHTML = '<i class="fas fa-trash"></i>';
+        btnEliminar.setAttribute("aria-label", "Eliminar producto");
+        btnEliminar.addEventListener("click", () => eliminarProducto(index));
 
-                <div class="cart-item-controls">
-
-                    <button
-                        type="button"
-                        onclick="cambiarCantidad(${index}, -1)"
-                        aria-label="Disminuir cantidad"
-                    >
-                        <i class="fas fa-minus"></i>
-                    </button>
-
-
-                    <span>
-                        ${producto.cantidad}
-                    </span>
-
-
-                    <button
-                        type="button"
-                        onclick="cambiarCantidad(${index}, 1)"
-                        aria-label="Aumentar cantidad"
-                    >
-                        <i class="fas fa-plus"></i>
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="cart-delete"
-                        onclick="eliminarProducto(${index})"
-                        aria-label="Eliminar producto"
-                    >
-                        <i class="fas fa-trash"></i>
-                    </button>
-
-                </div>
-
-            `;
-
-
-            cartContainer.appendChild(item);
-
-        }
-    );
-
+        controles.append(btnMenos, cantidad, btnMas, btnEliminar);
+        item.append(info, controles);
+        cartContainer.appendChild(item);
+    });
 
     actualizarResumen();
-
 }
 
 
@@ -840,152 +683,61 @@ function actualizarCarrito() {
 
 function actualizarResumen() {
 
-    const cantidadTotal =
-        obtenerCantidadTotal();
+    const cantidadTotal = obtenerCantidadTotal();
 
-
-    /* ==========================================
-       SI NO HAY PRODUCTOS
-    ========================================== */
+    if (totalCantidadElement) {
+        totalCantidadElement.textContent = cantidadTotal;
+    }
 
     if (cantidadTotal === 0) {
 
-        if (totalCantidadElement) {
-
-            totalCantidadElement.textContent =
-                "0";
-
-        }
-
         if (precioUnitarioElement) {
-
-            precioUnitarioElement.textContent =
-                "$0";
-
+            precioUnitarioElement.textContent = "$0";
         }
 
         if (totalPedidoElement) {
-
-            totalPedidoElement.textContent =
-                "$0";
-
+            totalPedidoElement.textContent = "$0";
         }
 
         if (quoteResult) {
-
-            quoteResult.classList.remove(
-                "active"
-            );
-
+            quoteResult.classList.remove("active");
         }
 
         return;
-
     }
 
-
-    /* ==========================================
-       OBTENER PRECIO
-    ========================================== */
-
-    const precio =
-        obtenerPrecioMayorista(
-            cantidadTotal
-        );
-
-
-    /* ==========================================
-       MENOS DE 20
-    ========================================== */
+    const precio = obtenerPrecioMayorista(cantidadTotal);
 
     if (!precio) {
 
-        if (totalCantidadElement) {
-
-            totalCantidadElement.textContent =
-                cantidadTotal;
-
-        }
-
         if (precioUnitarioElement) {
-
-            precioUnitarioElement.textContent =
-                "Desde $1.600";
-
+            precioUnitarioElement.textContent = "Desde $1.600";
         }
 
         if (totalPedidoElement) {
-
-            totalPedidoElement.textContent =
-                "Pendiente";
-
+            totalPedidoElement.textContent = "Desde $24.000";
         }
 
         if (quoteResult) {
-
-            quoteResult.classList.add(
-                "active"
-            );
-
+            quoteResult.classList.add("active");
         }
 
         return;
-
     }
 
-
-    /* ==========================================
-       CALCULAR TOTAL
-    ========================================== */
-
-    const total =
-        cantidadTotal * precio;
-
-
-    /* ==========================================
-       MOSTRAR CANTIDAD
-    ========================================== */
-
-    if (totalCantidadElement) {
-
-        totalCantidadElement.textContent =
-            `${cantidadTotal}`;
-
-    }
-
-
-    /* ==========================================
-       MOSTRAR PRECIO UNITARIO
-    ========================================== */
+    const total = cantidadTotal * precio;
 
     if (precioUnitarioElement) {
-
-        precioUnitarioElement.textContent =
-            formatoMoneda(precio);
-
+        precioUnitarioElement.textContent = formatoMoneda(precio);
     }
-
-
-    /* ==========================================
-       MOSTRAR TOTAL
-    ========================================== */
 
     if (totalPedidoElement) {
-
-        totalPedidoElement.textContent =
-            formatoMoneda(total);
-
+        totalPedidoElement.textContent = formatoMoneda(total);
     }
-
 
     if (quoteResult) {
-
-        quoteResult.classList.add(
-            "active"
-        );
-
+        quoteResult.classList.add("active");
     }
-
 }
 
 
@@ -997,169 +749,70 @@ function enviarPedidoWhatsApp() {
 
     ocultarErrorPedido();
 
-
-    /* ==========================================
-       VALIDAR CARRITO
-    ========================================== */
-
     if (carrito.length === 0) {
-
-        mostrarErrorPedido(
-            "Agrega al menos un sabor a tu pedido."
-        );
-
+        mostrarErrorPedido("Agrega al menos un sabor a tu pedido.");
         return;
-
     }
 
+    const cantidadTotal = obtenerCantidadTotal();
 
-    /* ==========================================
-       CANTIDAD TOTAL
-    ========================================== */
-
-    const cantidadTotal =
-        obtenerCantidadTotal();
-
-
-    /* ==========================================
-       VALIDAR MÍNIMO
-    ========================================== */
-
-    if (cantidadTotal < 20) {
-
+    if (cantidadTotal < 15) {
         mostrarErrorPedido(
-            "El pedido mínimo al por mayor es de 20 helados."
+            "El pedido mínimo al por mayor es de 15 helados."
         );
-
         return;
-
     }
 
-
-    /* ==========================================
-       OBTENER PRECIO
-    ========================================== */
-
-    const precio =
-        obtenerPrecioMayorista(
-            cantidadTotal
-        );
-
+    const precio = obtenerPrecioMayorista(cantidadTotal);
 
     if (!precio) {
-
-        mostrarErrorPedido(
-            "No fue posible calcular el precio del pedido."
-        );
-
+        mostrarErrorPedido("No fue posible calcular el precio del pedido.");
         return;
-
     }
 
-
-    /* ==========================================
-       VALIDAR NOMBRE
-    ========================================== */
-
-    const nombre =
-        nombreCliente
-            ? nombreCliente.value.trim()
-            : "";
-
+    const nombre = nombreCliente ? nombreCliente.value.trim() : "";
 
     if (!nombre) {
+        mostrarErrorPedido("Por favor escribe tu nombre.");
 
-        mostrarErrorPedido(
-            "Por favor escribe tu nombre."
-        );
-
-        if (nombreCliente) {
-
-            nombreCliente.focus();
-
-        }
+        if (nombreCliente) nombreCliente.focus();
 
         return;
-
     }
 
-
-    /* ==========================================
-       VALIDAR LUGAR
-    ========================================== */
-
-    const lugar =
-        lugarCliente
-            ? lugarCliente.value.trim()
-            : "";
-
+    const lugar = lugarCliente ? lugarCliente.value.trim() : "";
 
     if (!lugar) {
+        mostrarErrorPedido("Por favor escribe el lugar de entrega.");
 
-        mostrarErrorPedido(
-            "Por favor escribe el lugar de entrega."
-        );
-
-        if (lugarCliente) {
-
-            lugarCliente.focus();
-
-        }
+        if (lugarCliente) lugarCliente.focus();
 
         return;
-
     }
 
+    const total = cantidadTotal * precio;
 
-    /* ==========================================
-       CALCULAR TOTAL
-    ========================================== */
-
-    const total =
-        cantidadTotal * precio;
-
-
-    /* ==========================================
-       CONSTRUIR DETALLE DEL PEDIDO
-    ========================================== */
-
-    let detalleProductos = "";
-
-
-    carrito.forEach(producto => {
-
-        detalleProductos +=
-            `• ${producto.sabor}: ${producto.cantidad} unidades\n`;
-
-    });
-
-
-    /* ==========================================
-       MENSAJE WHATSAPP
-    ========================================== */
+    const detalleProductos = carrito.map(producto =>
+        `• ${producto.sabor}: ${producto.cantidad} unidades`
+    ).join("\n");
 
     const mensaje =
-`🍦 *PEDIDO DE HELADOS DULCE FRÍO*
+`🍦 *PEDIDO MAYORISTA - DULCE FRÍO*
 
 👤 *Nombre:* ${nombre}
 
-📦 *Pedido:*
+📦 *Detalle del pedido:*
 ${detalleProductos}
+
 📊 *Total de helados:* ${cantidadTotal}
 
-💰 *Precio unitario:* ${formatoMoneda(precio)}
+💰 *Precio por helado:* ${formatoMoneda(precio)}
 
-💵 *Total:* ${formatoMoneda(total)}
+💵 *Total del pedido:* ${formatoMoneda(total)}
 
 📍 *Lugar de entrega:* ${lugar}`;
 
-
-    /* ==========================================
-       ABRIR WHATSAPP
-    ========================================== */
-
     abrirWhatsApp(mensaje);
-
 }
 
 
