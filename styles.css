@@ -603,20 +603,19 @@ a {
         transform 0.5s ease;
 }
 
+/* 1. Definimos una altura máxima fija o relativa para las diapositivas */
 .carousel-slide {
-
     min-width: 100%;
-
-    height: 550px;
+    height: 900px; /* Ajusta esta altura (ej. 300px, 350px o 400px) según qué tan bajito quieras el carrusel */
+    overflow: hidden; /* Evita que cualquier sobrante se salga del contenedor */
 }
 
+/* 2. La imagen ocupa todo el ancho y alto del slide adaptándose sin deformarse */
 .carousel-slide img {
-
     width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
+    height: 100%; /* Cambiamos 80% a 100% para que llene completamente la diapositiva */
+    object-fit: cover; /* Recorta suavemente los bordes para mantener la proporción sin estirar la imagen */
+    object-position: center; /* Asegura que el centro de la imagen siempre quede visible */
 }
 
 
